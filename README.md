@@ -36,7 +36,7 @@ This mod patches two methods:
 
 ## Requirements
 
-- Core Keeper (verified on 1.2.1.4)
+- Core Keeper (verified on 1.2.1.5)
 - No CoreLib dependency — this mod runs standalone
 
 ## Installation (players)

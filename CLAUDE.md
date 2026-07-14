@@ -49,7 +49,7 @@ release; re-introduce if needed for layout work on counts > 4.
 
 ## Architecture
 
-Three patch classes plus bootstrap + config in the
+Two patch classes plus bootstrap + config in the
 `SimpleCraftingPoolExtender` namespace, plus shared editor helpers
 symlinked in from `../utils/`:
 
@@ -140,10 +140,11 @@ Awake-Postfix path sidesteps the whole problem.
 ## macOS / CrossOver
 
 The mod is deployed through the fake-mod.io workaround (see parent
-`../CLAUDE.md`). This mod's fake mod.io ID is **`9999995`** (the
-siblings `disable-durability` uses `9999999`, `faster-talents` uses
-`9999998`, `item-checklist` uses `9999997`, `caveling-divining-rod` uses
-`9999996` — they must differ).
+`../CLAUDE.md`). This mod's fake mod.io ID is **`9999995`** (the siblings
+must differ: `disable-durability` `9999999`, `faster-talents` `9999998`,
+`item-checklist` `9999997`, `caveling-divining-rod` `9999996`,
+`faster-pet-talents` `9999994`, `reusable-cattle-box` `9999993`,
+`rebalance-key-crafting` `9999992`, `mod-settings-menu` `9999991`).
 Do not open the in-game Mods menu while a fake-ID install is active;
 re-run `../utils/build.sh` to restore if the cache is wiped.
 

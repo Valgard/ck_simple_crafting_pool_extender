@@ -3,8 +3,8 @@
 All notable changes to this mod are documented in this file. The format is
 loosely based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 without strict adherence — entries describe what shipped per release, not
-every commit. The topmost `## [x.y.z]` entry is the version `upload.sh`
-publishes.
+every commit. The topmost `## [x.y.z]` entry is the current published
+version.
 
 ## [0.9.0] - 2026-06-07
 
@@ -24,6 +24,6 @@ small and focused; the pre-1.0 framing leaves room for fast follow-ups
   1/2/3 windows; the patch extrapolates the formula
   `−2.5 × count − 0.3125` so the up/down arrows + workbench-icon widget
   sit correctly to the left of the rendered windows for counts ≥ 4.
-- **Configurable maximum** via `unity/SimpleCraftingPoolExtender/ModConfig.cs`:
+- **Configurable maximum** via a `ModConfig.cs`:
   `maxPoolSize = 5`. Singleton API shape preserved so a future safe-IO
   config-loader can drop in without touching the patches.

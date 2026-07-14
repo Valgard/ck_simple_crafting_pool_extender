@@ -29,7 +29,7 @@ stations.
 
 ## Requirements
 
-- Core Keeper (verified on 1.2.1.4)
+- Core Keeper (verified on 1.2.1.5)
 
 ## For mod authors
 
