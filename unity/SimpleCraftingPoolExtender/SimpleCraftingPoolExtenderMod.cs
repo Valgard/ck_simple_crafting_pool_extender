@@ -16,9 +16,9 @@ namespace SimpleCraftingPoolExtender
     ///
     /// <para>This mod patches two methods:</para>
     /// <list type="number">
-    /// <item><see cref="SimpleCraftingPoolGrowthPatch"/> — clones the pool
-    /// on-demand in <c>ShowCraftingUI</c> up to <c>ModConfig.maxPoolSize</c>
-    /// windows.</item>
+    /// <item><see cref="SimpleCraftingPoolGrowthPatch"/> — clones the last
+    /// pool entry once in <c>SimpleCraftingUIContainer.Awake</c> up to
+    /// <c>ModConfig.maxPoolSize</c> windows.</item>
     /// <item><see cref="CraftingNavUIPositionPatch"/> — extrapolates the
     /// <c>CraftingCategoryNavigationUI</c> horizontal position formula for
     /// counts &gt; 3 (Vanilla only hardcodes 1/2/3).</item>
@@ -31,7 +31,7 @@ namespace SimpleCraftingPoolExtender
     {
         public void EarlyInit()
         {
-            Debug.Log($"[SimpleCraftingPoolExtender] EarlyInit — pool will grow on demand up to {ModConfig.Instance.maxPoolSize} windows");
+            Debug.Log($"[SimpleCraftingPoolExtender] EarlyInit — pool will grow at container Awake up to {ModConfig.Instance.maxPoolSize} windows");
         }
 
         public void Init()
