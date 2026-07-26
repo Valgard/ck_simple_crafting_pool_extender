@@ -42,21 +42,29 @@ namespace SimpleCraftingPoolExtender
         [HarmonyPostfix]
         private static void Postfix(SimpleCraftingUIContainer __instance)
         {
-            if (__instance.simpleCraftingUIs == null) return;
-            if (__instance.simpleCraftingUIs.Count == 0) return; // need a template
+            if (__instance.simpleCraftingUIs == null)
+                return;
+            if (__instance.simpleCraftingUIs.Count == 0)
+                return; // need a template
 
             int target = ModConfig.Instance.maxPoolSize;
-            if (__instance.simpleCraftingUIs.Count >= target) return;
+            if (__instance.simpleCraftingUIs.Count >= target)
+                return;
 
             int startCount = __instance.simpleCraftingUIs.Count;
             while (__instance.simpleCraftingUIs.Count < target)
             {
                 var template = __instance.simpleCraftingUIs[__instance.simpleCraftingUIs.Count - 1];
-                if (template == null) break;
+                if (template == null)
+                    break;
 
                 var cloneGO = Object.Instantiate(template.gameObject, template.transform.parent);
                 var cloneUI = cloneGO.GetComponent<SimpleCraftingUI>();
-                if (cloneUI == null) { Object.Destroy(cloneGO); break; }
+                if (cloneUI == null)
+                {
+                    Object.Destroy(cloneGO);
+                    break;
+                }
 
                 // Init() is gated by `inited` (copied to true via Instantiate),
                 // so this short-circuits in practice — but keep the call for

@@ -27,12 +27,13 @@ namespace SimpleCraftingPoolExtender
         [HarmonyPostfix]
         private static void Postfix(CraftingCategoryNavigationUI __instance)
         {
-            if (__instance.root == null || !__instance.root.activeSelf) return;
+            if (__instance.root == null || !__instance.root.activeSelf)
+                return;
             int count = Manager.ui.simpleCraftingUIContainer.amountOfWindowsShowing;
-            if (count < 4) return; // Vanilla switch already handled 1-3 correctly.
+            if (count < 4)
+                return; // Vanilla switch already handled 1-3 correctly.
 
-            __instance.root.transform.localPosition = new Vector3(
-                -2.5f * count - 0.3125f, 0f, 0f);
+            __instance.root.transform.localPosition = new Vector3(-2.5f * count - 0.3125f, 0f, 0f);
         }
     }
 }
