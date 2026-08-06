@@ -6,6 +6,16 @@ without strict adherence — entries describe what shipped per release, not
 every commit. The topmost `## [x.y.z]` entry is the current published
 version.
 
+## [0.9.1] - 2026-08-06
+
+### Fixed
+
+- Declared as client-only (`requiredOn: Client`). The mod previously declared
+  itself as required on client **and** server, which made Core Keeper refuse to
+  join any server that does not also have it installed — the player was offered
+  only "disable the mod" or "cancel the connection". Nothing in this mod needs
+  the server, so joining unmodded servers now works.
+
 ## [0.9.0] - 2026-06-07
 
 First public release — a deliberate pre-1.0 version. The feature scope is
