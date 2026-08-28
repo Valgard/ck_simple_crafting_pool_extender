@@ -15,5 +15,5 @@ are untouched, and unused slots stay hidden exactly as before.
 ## For mod authors
 
 List **SimpleCraftingPoolExtender** as a required dependency in your
-ModBuilderSettings and mod.io prompts players to install it. Without it your
+ModBuilderSettings and players are prompted to install it. Without it your
 recipe renders only for players who happen to run another pool-expanding mod.
