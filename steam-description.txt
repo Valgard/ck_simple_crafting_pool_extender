@@ -10,12 +10,6 @@ A small helper mod for other mods. It lets mods add a 4th crafting tab — and b
 
 [b]Multiplayer:[/b] this mod has no server-side behaviour of its own, but the workbench UI it patches renders on the client — install it wherever the mod that needs it is installed, matching that mod's own client/server requirements.
 
-[h2]Requirements[/h2]
-
-[list]
-[*] Core Keeper only — no CoreLib dependency, this mod runs standalone.
-[/list]
-
 [h2]For mod authors[/h2]
 
 Adding an item to a vanilla workbench? List Simple Crafting Pool Extender as a required dependency in your ModBuilderSettings, and mod.io/Steam will prompt players to install both. Without it, your recipe registers but never renders for players who don't already have a pool-expanding mod.
