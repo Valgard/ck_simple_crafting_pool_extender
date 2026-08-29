@@ -137,6 +137,13 @@ forced into the Inspector-default visual state (slots inactive +
 SpriteRenderer.sprite cleared) before vanilla activates it. The
 Awake-Postfix path sidesteps the whole problem.
 
+## Not yet built
+
+`docs/roadmap.md` carries one point, and it is not code: both screenshots in
+`sources/` were taken as window captures and carry the macOS title bar, so they
+need retaking. They are what `CK_DISCORD_MEDIA`, the mod.io gallery and the
+Workshop item all show.
+
 ## macOS / CrossOver
 
 The mod is deployed through the fake-mod.io workaround (see parent
