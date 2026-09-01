@@ -1,19 +1,19 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to Claude Code (claude.ai/code) when working with
+code in this repository.
 
 ## What this repo is
 
 A Core Keeper **helper mod** for other mods. Vanilla
-`SimpleCraftingUIContainer.simpleCraftingUIs` is an editor-hardcoded
-list of 3 entries — enough for a workbench's three 6-slot tabs. When a
-mod injects a new craftable into a vanilla workbench and pushes the
-recipe range past 18 slots, vanilla logs *"Not enough SimpleCraftingUIs
-… Needed at least 4, but only have 3"* and the new item never appears.
-This mod grows that pool to `maxPoolSize` (5 by default) so a 4th and
-5th tab can render. Two Harmony patches against Pugstorm's
-`CoreKeeperModSDK`. No content of its own. Personal-use, non-commercial
-(Pugstorm EULA).
+`SimpleCraftingUIContainer.simpleCraftingUIs` is an editor-hardcoded list of 3
+entries — enough for a workbench's three 6-slot tabs. When a mod injects a new
+craftable into a vanilla workbench and pushes the recipe range past 18 slots,
+vanilla logs *"Not enough SimpleCraftingUIs … Needed at least 4, but only have
+3"* and the new item never appears. This mod grows that pool to `maxPoolSize` (5
+by default) so a 4th and 5th tab can render. Two Harmony patches against
+Pugstorm's `CoreKeeperModSDK`. No content of its own. Personal-use,
+non-commercial (Pugstorm EULA).
 
 It is intended to be declared as a **required dependency** by mods that
 add craftable items to vanilla workbenches (the sibling
@@ -38,20 +38,18 @@ three file symlinks for the Assets-level files beside it
 `build.sh` invokes it idempotently on every run, so worktree switches
 and repo moves self-heal.
 
-No automated tests — verification is a manual in-game check. The most
-realistic scenario is using the sibling `caveling-divining-rod`
-(or any other mod that adds a craftable to Iron Workbench): open the
-Iron Workbench, confirm a 4th tab appears with the mod-added item.
-A synthetic 5-window test (no mod-items needed) lived briefly during
-0.9.0 development as `TestForceWindowCountPatch.cs` + a
-`testForceWindowCount` field on ModConfig — both were removed before
-release; re-introduce if needed for layout work on counts > 4.
+No automated tests — verification is a manual in-game check. The most realistic
+scenario is using the sibling `caveling-divining-rod` (or any other mod that
+adds a craftable to Iron Workbench): open the Iron Workbench, confirm a 4th tab
+appears with the mod-added item. A synthetic 5-window test (no mod-items needed)
+lived briefly during 0.9.0 development as `TestForceWindowCountPatch.cs` + a
+`testForceWindowCount` field on ModConfig — both were removed before release;
+re-introduce if needed for layout work on counts > 4.
 
 ## Architecture
 
-Two patch classes plus bootstrap + config in the
-`SimpleCraftingPoolExtender` namespace, plus shared editor helpers
-symlinked in from `../utils/`:
+Two patch classes plus bootstrap + config in the `SimpleCraftingPoolExtender`
+namespace, plus shared editor helpers symlinked in from `../utils/`:
 
 - **`SimpleCraftingPoolExtenderMod` (`IMod`)** — bootstrap. EarlyInit
   logs the configured `maxPoolSize`. No `BurstDisabler` needed: neither
@@ -63,22 +61,19 @@ symlinked in from `../utils/`:
   future safe-IO config-loader could drop in without touching the
   patches.
 - **`SimpleCraftingPoolGrowthPatch`** — `Postfix` on
-  `SimpleCraftingUIContainer.Awake`. Runs **once** per container
-  spawn, immediately after vanilla's `Init()` loop over the 3
-  original entries and before anything is ever rendered. Clones the
-  last existing `SimpleCraftingUI` via
-  `UnityEngine.Object.Instantiate(template.gameObject, parent)` and
-  appends to `simpleCraftingUIs` until the list reaches `maxPoolSize`.
-  Idempotent (no-op if already at target). See "Why Awake-Postfix"
-  below for the trade-off vs the originally-tried
-  ShowCraftingUI-Prefix.
+  `SimpleCraftingUIContainer.Awake`. Runs **once** per container spawn,
+  immediately after vanilla's `Init()` loop over the 3 original entries and
+  before anything is ever rendered. Clones the last existing `SimpleCraftingUI`
+  via `UnityEngine.Object.Instantiate(template.gameObject, parent)` and appends
+  to `simpleCraftingUIs` until the list reaches `maxPoolSize`. Idempotent (no-op
+  if already at target). See "Why Awake-Postfix" below for the trade-off vs the
+  originally-tried ShowCraftingUI-Prefix.
 - **`CraftingNavUIPositionPatch`** — `Postfix` on
-  `CraftingCategoryNavigationUI.LateUpdate`. Vanilla's `switch`
-  hardcodes x-positions only for `amountOfWindowsShowing = 1/2/3`
-  (`−2.8125`, `−5.3125`, `−7.8125`); at counts ≥ 4 the switch falls
-  through silently and the nav widget sticks at whatever position it
-  had last frame. The patch extrapolates the verified formula
-  `−2.5 × count − 0.3125` for counts ≥ 4. Early-outs for 1-3 so
+  `CraftingCategoryNavigationUI.LateUpdate`. Vanilla's `switch` hardcodes
+  x-positions only for `amountOfWindowsShowing = 1/2/3` (`−2.8125`, `−5.3125`,
+  `−7.8125`); at counts ≥ 4 the switch falls through silently and the nav widget
+  sticks at whatever position it had last frame. The patch extrapolates the
+  verified formula `−2.5 × count − 0.3125` for counts ≥ 4. Early-outs for 1-3 so
   vanilla behaviour is preserved exactly.
 - **Shared editor helpers** (`../utils/CLIBuildHelper.cs`,
   `CLIPublishHelper.cs`, `LocalizationGenerator.cs`, namespace
@@ -113,24 +108,22 @@ how many windows the active category needs, clone the last entry up
 to that count, then let vanilla run. Idempotent on subsequent opens.
 Conceptually cleaner than always pre-allocating.
 
-It broke visually. On a workbench whose 4th tab carried a single
-mod-added recipe, the 4th tab rendered the real item **plus** the
-template's earlier-rendered items underneath. The cause:
-`Object.Instantiate` deep-copies the template's full visual state,
-including each `itemSlot[i].UpdateSlot()` sprite from whichever
-workbench the template last rendered. Vanilla's
-`RecipesUI.ShowContainerUI` activates only slots with an active
-recipe and deactivates the rest — but inactive `SpriteRenderer`s
-still carry their last sprite, which shows through.
+It broke visually. On a workbench whose 4th tab carried a single mod-added
+recipe, the 4th tab rendered the real item **plus** the template's
+earlier-rendered items underneath. The cause: `Object.Instantiate` deep-copies
+the template's full visual state, including each `itemSlot[i].UpdateSlot()`
+sprite from whichever workbench the template last rendered. Vanilla's
+`RecipesUI.ShowContainerUI` activates only slots with an active recipe and
+deactivates the rest — but inactive `SpriteRenderer`s still carry their last
+sprite, which shows through.
 
-Awake fires once, **before any workbench has rendered**. Cloning at
-that point captures the template in its Inspector-default
-"all slots inactive" state, no sprite bleed-through, no run-time
-race with a prior render. Trade-off: every SimpleCrafting workbench
-now has 5 pool entries even when only 1-3 are needed. This is free
-for vanilla because `ShowCraftingUI` explicitly calls `HideCraftingUI()`
-on every entry beyond `amountOfWindowsShowing` (= `root.SetActive(false)`,
-zero render cost).
+Awake fires once, **before any workbench has rendered**. Cloning at that point
+captures the template in its Inspector-default "all slots inactive" state, no
+sprite bleed-through, no run-time race with a prior render. Trade-off: every
+SimpleCrafting workbench now has 5 pool entries even when only 1-3 are needed.
+This is free for vanilla because `ShowCraftingUI` explicitly calls
+`HideCraftingUI()` on every entry beyond `amountOfWindowsShowing` (=
+`root.SetActive(false)`, zero render cost).
 
 If you reopen the on-demand path in the future, the clone must be
 forced into the Inspector-default visual state (slots inactive +
@@ -157,15 +150,14 @@ re-run `../utils/build.sh` to restore if the cache is wiped.
 
 ## Publishing to mod.io
 
-`../utils/upload.sh` publishes this mod. It runs the shared Editor
-class `CoreKeeperModUtils.CLIPublishHelper.Publish` (symlinked in from
-`../utils/`, alongside `CLIBuildHelper`) via Unity batchmode. The
-publish reads `MOD_REPO_ROOT` (set in `.envrc`) to locate
-`CHANGELOG.md`.
+`../utils/upload.sh` publishes this mod. It runs the shared Editor class
+`CoreKeeperModUtils.CLIPublishHelper.Publish` (symlinked in from `../utils/`,
+alongside `CLIBuildHelper`) via Unity batchmode. The publish reads
+`MOD_REPO_ROOT` (set in `.envrc`) to locate `CHANGELOG.md`.
 
-- `Editor/SimpleCraftingPoolExtender.Editor.asmdef` references the
-  mod.io plugin DLL via `overrideReferences: true` +
-  `precompiledReferences: ["modio.UnityPlugin.dll"]`.
+- `Editor/SimpleCraftingPoolExtender.Editor.asmdef` references the mod.io plugin
+  DLL via `overrideReferences: true` + `precompiledReferences:
+  ["modio.UnityPlugin.dll"]`.
 - The published version comes from the topmost `## [x.y.z]` entry of
   `CHANGELOG.md`; bump it before publishing.
 - The profile logo is `unity/SimpleCraftingPoolExtender/Editor/logo.png`
@@ -187,5 +179,7 @@ install. Currently the only dependent in this repo family is
 ## Conventions
 
 - Commit messages: short imperative subject, no emoji, body wrapped ~75 chars.
-- Documentation files (`CLAUDE.md`, `README.md`, `docs/`) are English; chat answers are German.
-- The user prefers `git commit --amend` / `git reset --soft` over fix-up commits on a personal branch, and `git rebase` over `git merge`.
+- Documentation files (`CLAUDE.md`, `README.md`, `docs/`) are English; chat
+  answers are German.
+- The user prefers `git commit --amend` / `git reset --soft` over fix-up commits
+  on a personal branch, and `git rebase` over `git merge`.
