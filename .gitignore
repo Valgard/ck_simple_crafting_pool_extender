@@ -45,3 +45,7 @@ docs/sprite-candidates/
 
 # LocalizationGenerator output (regenerated each build from localization/localization.yaml)
 unity/SimpleCraftingPoolExtender/Localization/Generated/
+
+# Superpowers process artifacts: plans, scratch and the subagent workspace
+docs/superpowers/
+/.superpowers/
